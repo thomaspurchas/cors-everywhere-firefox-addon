@@ -141,7 +141,7 @@ var spenibus_corsEverywhere = {
 
       if(!(headerHeaders == '*' || headerHeaders == 'null')) {
          // force cross origin
-         httpChannel.setResponseHeader('Access-Control-Allow-Headers', '*', false);
+         httpChannel.setResponseHeader('Access-Control-Allow-Headers', 'Content-Type', false);
       }
 
      
