@@ -122,20 +122,29 @@ var spenibus_corsEverywhere = {
 
       // check response header
       // was throwing an exception necessary if header is not set, mozilla ?
-      var header;
+      var headerOrigin;
       try {
-         header = httpChannel.getResponseHeader('Access-Control-Allow-Origin');
+         headerOrigin = httpChannel.getResponseHeader('Access-Control-Allow-Origin');
+      } catch(e) {}
+      
+      var headerHeaders;
+      try {
+         headerHeaders = httpChannel.getResponseHeader('Access-Control-Allow-Headers');
       } catch(e) {}
 
 
-      // abort if header has cors already
-      if(header == '*' || header == 'null') {
-         return;
+      // had header only if it does not already exist
+      if(!(headerOrigin == '*' || headerOrigin == 'null')) {
+         // force cross origin
+         httpChannel.setResponseHeader('Access-Control-Allow-Origin', origin, false);
       }
 
+      if(!(headerHeaders == '*' || headerHeaders == 'null')) {
+         // force cross origin
+         httpChannel.setResponseHeader('Access-Control-Allow-Headers', '*', false);
+      }
 
-      // force cross origin
-      httpChannel.setResponseHeader('Access-Control-Allow-Origin', origin, false);
+     
    }},
 
 
