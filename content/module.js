@@ -119,6 +119,16 @@ var spenibus_corsEverywhere = {
          origin = '*';
       }
 
+      // Get request headers so we can play them back
+      var headers;
+      try {
+         headers = httpChannel.getRequestHeader('Access-Control-Request-Headers');
+      } catch(e) {}
+
+      if(!headers) {
+         headers = '';
+      }
+
 
       // check response header
       // was throwing an exception necessary if header is not set, mozilla ?
@@ -140,8 +150,8 @@ var spenibus_corsEverywhere = {
       }
 
       if(!(headerHeaders == '*' || headerHeaders == 'null')) {
-         // force cross origin
-         httpChannel.setResponseHeader('Access-Control-Allow-Headers', 'Content-Type', false);
+         // add allowed request headers
+         httpChannel.setResponseHeader('Access-Control-Allow-Headers', headers, false);
       }
 
      
